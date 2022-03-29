@@ -7,4 +7,10 @@ export default {
         dbLink: String(process.env.DBLINK),
         redisLink: String(process.env.REDIS_LINK),
     },
+
+    server: {
+        port: String(process.env.SERVER_PORT),
+        host: String(process.env.SERVER_HOST),
+        prefix: String(process.env.SERVER_PREFIX),
+    },
 };
