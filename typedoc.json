@@ -1,0 +1,13 @@
+{
+  "out": "docs",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "includeVersion": true,
+  "readme" : "none",
+  "name": "Project Documentation",
+  "entryPoints": [
+    "src/server/api/v1/api.ts",
+    "src/server/utils/index.ts"
+  ]
+}
