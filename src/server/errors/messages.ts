@@ -9,6 +9,9 @@
 export enum MESSAGES {
     BAD_REQUEST = 'Bad Request',
     UNAUTHORIZED = 'Unauthorized',
+    TOKEN_EXPIRED = 'Token has expired',
+    TOKEN_INVALID = 'Token is invalid',
+    SESSION_NOT_FOUND = 'Session Not Found',
     FORBIDDEN = 'Forbidden',
     UNSUPPORTED_FILE = 'Unsupported File Type',
     NOT_FOUND = 'Not Found',
