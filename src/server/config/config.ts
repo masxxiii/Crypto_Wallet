@@ -13,4 +13,13 @@ export default {
         host: String(process.env.SERVER_HOST),
         prefix: String(process.env.SERVER_PREFIX),
     },
+
+    cors: {
+        origins: JSON.parse(String(process.env.CORS_ORIGINS)),
+        methods: JSON.parse(String(process.env.CORS_METHODS)),
+        headers: JSON.parse(String(process.env.CORS_HEADERS)),
+        maxAge: Number(process.env.CORS_MAX_AGE),
+        allowCredentials: String(process.env.CORS_ALLOW_CREDENTIALS),
+        exposeHeaders: JSON.parse(String(process.env.CORS_EXPOSE_HEADERS)),
+    },
 };
