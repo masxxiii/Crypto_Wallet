@@ -36,8 +36,24 @@ export function getUUID(): string {
  * @remarks
  * Gets the date in the format Day-Month-Year.
  *
+ * @param date - Default date object.
+ *
  * @returns string
  */
 export function getDate(date: Date = new Date()) {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 }
+
+/**
+ * Delay utility function.
+ *
+ * @remarks
+ * Delays the process according to specified interval.
+ *
+ * @param ms - The delay time in ms
+ *
+ * @returns void
+ */
+export const delay = (ms: number) => new Promise((res) => {
+    setTimeout(res, ms);
+});
