@@ -13,3 +13,11 @@ export interface IQuery {
     limit?: number;
     offset?: number;
 }
+
+/**
+ * Pagination interface used in find and count call.
+ */
+export interface IPagination<T> {
+    rows: T[];
+    count: number;
+}
