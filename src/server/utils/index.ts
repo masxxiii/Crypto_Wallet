@@ -29,3 +29,15 @@ export function response(res?: object | undefined): IResponse {
 export function getUUID(): string {
     return uuidv4();
 }
+
+/**
+ * Current date.
+ *
+ * @remarks
+ * Gets the date in the format Day-Month-Year.
+ *
+ * @returns string
+ */
+export function getDate(date: Date = new Date()) {
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
