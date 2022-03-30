@@ -77,7 +77,7 @@ export function getDate(date: Date = new Date()) {
  *
  * @param ms - The delay time in ms
  *
- * @returns void
+ * @returns Promise<void>
  */
 export const delay = (ms: number) => new Promise((res) => {
     setTimeout(res, ms);
