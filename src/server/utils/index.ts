@@ -1,3 +1,4 @@
+import { v4 as uuidv4, } from 'uuid';
 import { IResponse, } from '../interfaces';
 
 /**
@@ -15,4 +16,16 @@ export function response(res?: object | undefined): IResponse {
         ok: true,
         result: res,
     };
+}
+
+/**
+ * UUID4 generator.
+ *
+ * @remarks
+ * Generates a random version 4 UUID.
+ *
+ * @returns string
+ */
+export function getUUID(): string {
+    return uuidv4();
 }
