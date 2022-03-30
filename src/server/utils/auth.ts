@@ -41,7 +41,6 @@ export const signPayload = (payload: string | Buffer | IDataJWT): ITokens => {
  * @param secretOrPublicKey - The secret or public key.
  *
  * @returns Promise<JwtPayload|string>
- *
  */
 export const verifyToken = async (token: string, secretOrPublicKey: Secret)
     : Promise<JwtPayload | string> => {
