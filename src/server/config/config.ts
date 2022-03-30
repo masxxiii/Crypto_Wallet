@@ -22,4 +22,15 @@ export default {
         allowCredentials: String(process.env.CORS_ALLOW_CREDENTIALS),
         exposeHeaders: JSON.parse(String(process.env.CORS_EXPOSE_HEADERS)),
     },
+
+    jwt: {
+        access: {
+            secret: String(process.env.JWT_ACCESS_SECRET),
+            lifetime: Number(process.env.JWT_ACCESS_LIFETIME),
+        },
+        refresh: {
+            secret: String(process.env.JWT_REFRESH_SECRET),
+            lifetime: Number(process.env.JWT_REFRESH_LIFETIME),
+        },
+    },
 };
