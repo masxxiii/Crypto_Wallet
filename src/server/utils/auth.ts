@@ -1,6 +1,10 @@
 import * as jwt from 'jsonwebtoken';
+import { JwtPayload, Secret, } from 'jsonwebtoken';
 import config from '../config/config';
 import { IDataJWT, ITokens, } from '../interfaces/auth';
+import { ERRORS, } from '../errors/codes';
+import { error, } from './index';
+import { MESSAGES, } from '../errors/messages';
 
 /**
  * Generates JWT tokens.
@@ -12,7 +16,7 @@ import { IDataJWT, ITokens, } from '../interfaces/auth';
  *
  * @returns ITokens
  */
-export const signPayload = (payload: IDataJWT): ITokens => {
+export const signPayload = (payload: string | Buffer | IDataJWT): ITokens => {
     const access = jwt.sign(
         payload,
         config.jwt.access.secret,
@@ -25,4 +29,33 @@ export const signPayload = (payload: IDataJWT): ITokens => {
     );
 
     return { access, refresh, };
+};
+
+/**
+ * Verifies signed token.
+ *
+ * @remarks
+ * Verifies token using a secret or public key to get the decoded data.
+ *
+ * @param token - The token to be verified.
+ * @param secretOrPublicKey - The secret or public key.
+ *
+ * @returns Promise<JwtPayload|string>
+ *
+ */
+export const verifyToken = async (token: string, secretOrPublicKey: Secret)
+    : Promise<JwtPayload | string> => {
+    try {
+        return await jwt.verify(token, secretOrPublicKey);
+    }
+    catch (e) {
+        const code = e.name === 'TokenExpiredError'
+            ? ERRORS.TOKEN_EXPIRED
+            : ERRORS.TOKEN_INVALID;
+        const message = e.name === 'TokenExpiredError'
+            ? MESSAGES.TOKEN_EXPIRED
+            : MESSAGES.TOKEN_INVALID;
+
+        return error(code, message, {});
+    }
 };
