@@ -3,11 +3,11 @@
  */
 export interface ITokens {
     access: string;
-    refresh: strin;
+    refresh: string;
 }
 
 /**
- * JWT data interface used in JWT generation params.
+ * JWT payload interface used when signing with JWT.
  */
 export interface IDataJWT {
     id?: string;
