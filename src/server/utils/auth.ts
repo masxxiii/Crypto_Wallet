@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { JwtPayload, Secret, } from 'jsonwebtoken';
 import config from '../config/config';
-import { IDataJWT, ITokens, } from '../interfaces/auth';
+import { IDataJWT, ITokens, ValidateSignature, } from '../interfaces/auth';
 import { ERRORS, } from '../errors/codes';
 import { error, } from './index';
 import { MESSAGES, } from '../errors/messages';
@@ -58,3 +58,24 @@ export const verifyToken = async (token: string, secretOrPublicKey: Secret)
         return error(code, message, {});
     }
 };
+
+/**
+ * Validates a token based on its type.
+ *
+ * @remarks
+ * Used in validate option to register auth strategies.
+ *
+ * @param tokenType - The token type.
+ *
+ * @returns ValidateSignature
+ */
+export function validateToken(tokenType: 'access' | 'refresh'): ValidateSignature {
+    return async (r: Request, token: string) => {
+        const data: IDataJWT | string = await verifyToken(
+            token,
+            config.jwt[String(tokenType)].secret
+        );
+
+        return { isValid: true, credentials: { account: '', }, artifacts: { token, type: tokenType, sessionId: '', }, };
+    };
+}
