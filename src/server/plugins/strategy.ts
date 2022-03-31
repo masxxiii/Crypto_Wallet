@@ -1,6 +1,6 @@
 import { Plugin, Server, } from '@hapi/hapi';
 import * as HapiBearer from 'hapi-auth-bearer-token';
-import { tokenValidate, } from '../utils/auth';
+import { validateToken, } from '../utils/auth';
 
 type StrategyOptions = Record<string, any>;
 
@@ -18,10 +18,10 @@ export const AuthStrategies: Plugin<StrategyOptions> = {
             HapiBearer
         ]);
         server.auth.strategy('jwt-access', 'bearer-access-token', {
-            validate: tokenValidate('access'),
+            validate: validateToken('access'),
         });
         server.auth.strategy('jwt-refresh', 'bearer-access-token', {
-            validate: tokenValidate('refresh'),
+            validate: validateToken('refresh'),
         });
         server.auth.default('jwt-access');
     },
