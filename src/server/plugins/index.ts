@@ -6,7 +6,7 @@ import { ServerRegisterPluginObject, } from '@hapi/hapi';
 import SwaggerOptions from '../config/swagger';
 import { pinoConfig, } from '../config/pino';
 import { Websocket, } from './websocket';
-import { AuthStrategies, } from './strategies';
+import { AuthStrategies, } from './strategy';
 
 /**
  * Server plugins object.
