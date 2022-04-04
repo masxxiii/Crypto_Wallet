@@ -7,7 +7,7 @@ import { Wallet, } from './Wallet';
 
 export enum AccountStatus {
     Unconfirmed = 'unconfirmed',
-    Confirmed = 'confirmed',
+    Confirmed = 'confirmed'
 }
 
 interface AccountSettings {
