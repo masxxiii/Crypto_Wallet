@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import {
-    Column, DataType, HasOne, Model, Table,
+    Column, DataType, HasMany, Model, Scopes, Table,
 } from 'sequelize-typescript';
 import { getUUID, } from '../utils';
 import { Wallet, } from './Wallet';
@@ -29,6 +29,14 @@ export const accountSettingsDefault: AccountSettings = {
     numberOfAttempts: 5,
     lockedTill: null,
 };
+
+@Scopes(() => ({
+    defaultScope: {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+        },
+    },
+}))
 
 @Table
 export class Account extends Model {
@@ -67,8 +75,8 @@ export class Account extends Model {
     @Column({ type: DataType.JSONB, defaultValue: accountSettingsDefault, })
         settings!: AccountSettings;
 
-    @HasOne(() => Wallet)
-        wallet!: Wallet;
+    @HasMany(() => Wallet)
+        wallets!: Wallet[];
 
     passwordCompare(password: string): boolean {
         return bcrypt.compareSync(password, this.password);

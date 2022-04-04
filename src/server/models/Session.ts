@@ -1,8 +1,16 @@
 import {
-    BelongsTo, Column, DataType, ForeignKey, Model, Table,
+    BelongsTo, Column, DataType, ForeignKey, Model, Scopes, Table,
 } from 'sequelize-typescript';
 import { getUUID, } from '../utils';
 import { Account, } from './Account';
+
+@Scopes(() => ({
+    defaultScope: {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+        },
+    },
+}))
 
 @Table
 export class Session extends Model {
