@@ -1,10 +1,13 @@
 import * as jwt from 'jsonwebtoken';
 import { JwtPayload, Secret, } from 'jsonwebtoken';
+import { Request, } from '@hapi/hapi';
 import config from '../config/config';
 import { IDataJWT, ITokens, ValidateSignature, } from '../interfaces/auth';
 import { ERRORS, } from '../errors/codes';
-import { error, } from './index';
+import { error, getIPAddress, } from './index';
 import { MESSAGES, } from '../errors/messages';
+import { Account, } from '../models/Account';
+import { Session, } from '../models/Session';
 
 /**
  * Generates JWT tokens.
@@ -65,17 +68,42 @@ export const verifyToken = async (token: string, secretOrPublicKey: Secret)
  * @remarks
  * Used in validate option to register auth strategies.
  *
- * @param tokenType - The token type.
+ * @param type - The token type.
  *
  * @returns ValidateSignature
  */
-export function validateToken(tokenType: 'access' | 'refresh'): ValidateSignature {
+export function validateToken(type: 'access' | 'refresh'): ValidateSignature {
     return async (r: Request, token: string) => {
-        const data: IDataJWT | string = await verifyToken(
+        const data = <IDataJWT> await verifyToken(
             token,
-            config.jwt[String(tokenType)].secret
+            config.jwt[String(type)].secret
         );
 
-        return { isValid: true, credentials: { account: '', }, artifacts: { token, type: tokenType, sessionId: '', }, };
+        const session = await Session.findByPk(data.id, {
+            include: {
+                model: Account,
+                required: true,
+            },
+        });
+
+        if (!session) {
+            return error(ERRORS.SESSION_NOT_FOUND, MESSAGES.SESSION_NOT_FOUND, {});
+        }
+
+        if (session.ip !== getIPAddress(r)) {
+            return error(ERRORS.SESSION_SUSPICIOUS, MESSAGES.SESSION_SUSPICIOUS, {});
+        }
+
+        return {
+            isValid: true,
+            credentials: {
+                account: await Account.findByPk(1),
+            },
+            artifacts: {
+                token,
+                type,
+                sessionId: '',
+            },
+        };
     };
 }
