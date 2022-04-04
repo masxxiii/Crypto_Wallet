@@ -1,4 +1,5 @@
 import { JwtPayload, } from 'jsonwebtoken';
+import { Boom, } from '@hapi/boom';
 import { Account, } from '../models/Account';
 
 /**
@@ -37,4 +38,4 @@ interface IValidateToken {
 /**
  * Function type signature used in validation option for strategies.
  */
-export type ValidateSignature = (r: Request, token: string) => Promise<IValidateToken>;
+export type ValidateSignature = (r: Request, token: string) => Promise<IValidateToken | Boom>;
