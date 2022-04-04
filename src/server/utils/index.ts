@@ -1,5 +1,6 @@
 import { v4 as uuidv4, } from 'uuid';
 import { Boom, } from '@hapi/boom';
+import { Request, } from '@hapi/hapi';
 import { IResponse, } from '../interfaces';
 import { ERRORS, } from '../errors/codes';
 
@@ -98,4 +99,19 @@ export async function handleValidationError(r: any, h: any, err: any): Promise<B
     }
 
     return error(ERRORS.BAD_REQUEST, err, {});
+}
+
+/**
+ * Gets IP address.
+ *
+ * @remarks
+ * Gets the IP from the header or the remote client.
+ *
+ * @param headers - The raw request header.
+ * @param remoteAddress - Remote client IP.
+ *
+ * @returns string
+ */
+export function getIPAddress({ headers, info: { remoteAddress, }, }: Request): string {
+    return headers['X-Forwarded-For'] || remoteAddress;
 }
