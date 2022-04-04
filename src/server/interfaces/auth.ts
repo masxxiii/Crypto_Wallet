@@ -1,4 +1,5 @@
 import { JwtPayload, } from 'jsonwebtoken';
+import { Request, } from '@hapi/hapi';
 import { Boom, } from '@hapi/boom';
 import { Account, } from '../models/Account';
 
