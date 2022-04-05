@@ -97,12 +97,12 @@ export function validateToken(type: 'access' | 'refresh'): ValidateSignature {
         return {
             isValid: true,
             credentials: {
-                account: await Account.findByPk(1),
+                account: session.account,
             },
             artifacts: {
                 token,
                 type,
-                sessionId: '',
+                sessionId: session.id,
             },
         };
     };
